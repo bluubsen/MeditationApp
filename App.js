@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import HomeScreen from "./screens/HomeScreen";
+import MeditationScreen from "./screens/MediationScreen";
+import LoginScreen from "./screens/LoginScreen";
+
 
 export default class App extends Component {
   render() {
@@ -9,6 +13,20 @@ export default class App extends Component {
     );
   }
 }
+
+const DrawerNavigationProfilHeader = (props) => (
+    <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ height: 200, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+
+            <Image source={require('./Icons/Icons/png/lotus-position-1.png')}
+                   style={{ height: 120, width: 120, borderRadius: 60 }} />
+
+        </View>
+        <ScrollView>
+            <DrawerItems {...props} />
+        </ScrollView>
+    </SafeAreaView>
+)
 
 
 class WelcomeScreen extends Component {
@@ -33,12 +51,9 @@ class DashboardScreen extends Component {
 }
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Welcome: {
-    screen: WelcomeScreen
-  },
-  Dashboard: {
-    screen: DashboardScreen
-  }
+    Login: { screen: LoginScreen },
+    Home: { screen: HomeScreen },
+    Meditation: { screen: MeditationScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

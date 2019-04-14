@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import React, {Component} from 'react';
+import {Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {createAppContainer, createDrawerNavigator, createSwitchNavigator, DrawerItems} from 'react-navigation';
 import HomeScreen from "./screens/HomeScreen";
 import MeditationScreen from "./screens/MediationScreen";
 import LoginScreen from "./screens/LoginScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+import ProfilScreen from "./screens/ProfilScreen";
 
 
 export default class App extends Component {
-  render() {
-    return (
-      <AppContainer />
-    );
-  }
+    render() {
+        return (
+            <AppContainer/>
+        );
+    }
 }
 
 const DrawerNavigationProfilHeader = (props) => (
-    <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ height: 200, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+    <SafeAreaView style={{flex: 1}}>
+        <View style={{height: 200, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center'}}>
 
             <Image source={require('./Icons/Icons/png/lotus-position-1.png')}
-                   style={{ height: 120, width: 120, borderRadius: 60 }} />
+                   style={{height: 120, width: 120, borderRadius: 60}}/>
 
         </View>
         <ScrollView>
@@ -28,41 +30,56 @@ const DrawerNavigationProfilHeader = (props) => (
     </SafeAreaView>
 )
 
+const DrawerNavigator = createDrawerNavigator({
+        Meditation: {
+            screen: HomeScreen
+        },
+        Settings: {screen: SettingsScreen},
+        Profil: {screen: ProfilScreen},
+        Login: {screen: LoginScreen}
+    }
+    , {
+        contentComponent: DrawerNavigationProfilHeader,
+        contentOptions: {activeTintColor: 'orange'}
+    })
+;
 
-class WelcomeScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Welcome</Text>
-      </View>
-    );
-  }
-}
-
-
-class DashboardScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>DashboardScreen</Text>
-      </View>
-    );
-  }
-}
 
 const AppSwitchNavigator = createSwitchNavigator({
-    Login: { screen: LoginScreen },
-    Home: { screen: HomeScreen },
-    Meditation: { screen: MeditationScreen }
+    Login: {screen: LoginScreen},
+    Home: {screen: DrawerNavigator},
+    Meditation: {screen: MeditationScreen}
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
+
+
+class WelcomeScreen extends Component {
+    render() {
+        return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>Welcome</Text>
+            </View>
+        );
+    }
+}
+
+
+class DashboardScreen extends Component {
+    render() {
+        return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>DashboardScreen</Text>
+            </View>
+        );
+    }
+}

@@ -1,13 +1,22 @@
 import React, {Component} from "react";
-import {Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    Dimensions,
+    ImageBackground,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    TouchableWithoutFeedback, Keyboard
+} from "react-native";
 import bgImage from "../backgrounds/Pictures/dawn-dusk-evening-861443.jpg";
 import {Icon} from "native-base";
 
 
-const { width: WIDTH } = Dimensions.get('window')
+const {width: WIDTH} = Dimensions.get('window')
 
 class LoginScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             showPass: true,
@@ -16,52 +25,58 @@ class LoginScreen extends Component {
     }
 
     showPass = () => {
-        if(this.state.press == false){
+        if (this.state.press == false) {
             this.setState({showPass: false, press: true})
-        }else {
+        } else {
             this.setState({showPass: true, press: false})
         }
     }
+
     render() {
         return (
-            <ImageBackground source={bgImage} style={styles.backgroundContainer}>
-                <View styles={styles.logoContainer}>
-                    {/*<Image />  for the logo is here a place*/}
-                    <Text style={styles.textContent}>Easy Meditaion</Text>
-                </View>
-                <View style={styles.inputContainer}>
-                    <Icon name={'person'} size={28} color={'rgba(255,255,255,0.7)'} style={styles.inputIcon}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Username'
-                        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                        underlineColorAndroid='transparent'
-                    />
-                </View>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <ImageBackground source={bgImage} style={styles.backgroundContainer}>
+                    <View styles={styles.logoContainer}>
+                        {/*<Image />  for the logo is here a place*/}
+                        <Text style={styles.textContent}>Easy Meditaion</Text>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Icon name={'person'} size={28} color={'rgba(255,255,255,0.7)'} style={styles.inputIcon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Username'
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            underlineColorAndroid='transparent'
+                        />
+                    </View>
 
-                <View style={styles.inputContainer}>
-                    <Icon name={'lock'} size={28} color={'rgba(255,255,255,0.7)'} style={styles.inputIcon}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Password'
-                        secureTextEntry={this.state.showPass}
-                        autoCorrect={false}
-                        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-                        underlineColorAndroid='transparent'
-                    />
-                    <TouchableOpacity style={styles.btnEye} onPress={this.showPass.bind(this)}>
-                        <Icon name={this.state.press == false ? 'eye' : 'eye-off'} size={26} color={'rgba(255,255,255,0.7)'} />
+                    <View style={styles.inputContainer}>
+                        <Icon name={'lock'} size={28} color={'rgba(255,255,255,0.7)'} style={styles.inputIcon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Password'
+                            secureTextEntry={this.state.showPass}
+                            autoCorrect={false}
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            underlineColorAndroid='transparent'
+                        />
+                        <TouchableOpacity style={styles.btnEye} onPress={this.showPass.bind(this)}>
+                            <Icon name={this.state.press == false ? 'eye' : 'eye-off'} size={26}
+                                  color={'rgba(255,255,255,0.7)'}/>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.btnLogin} onPress={() => this.props.navigation.navigate('Home')}>
+                        <Text style={styles.text}>Login</Text>
                     </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={styles.btnLogin} onPress={() => this.props.navigation.navigate('Home')}>
-                    <Text style={styles.text}>Login</Text>
-                </TouchableOpacity>
-            </ImageBackground>
-        );
+                </ImageBackground>
+            </TouchableWithoutFeedback>
+        )
+            ;
     }
 }
+
 export default LoginScreen;
 
 

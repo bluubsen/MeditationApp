@@ -6,9 +6,23 @@ import MeditationScreen from "./screens/MediationScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfilScreen from "./screens/ProfilScreen";
+import * as firebase from 'firebase';
 
+const developmentMode = true;
 
 export default class App extends Component {
+
+    componentWillAmount() {
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6oQMuUnFLw8GSvsV1yecLNUdbSlqMfsw",
+            authDomain: "easy-meditation.firebaseapp.com",
+            databaseURL: "https://easy-meditation.firebaseio.com",
+            projectId: "easy-meditation",
+            storageBucket: "easy-meditation.appspot.com"
+        }
+        firebase.initializeApp(firebaseConfig);
+    }
+
     render() {
         return (
             <AppContainer/>

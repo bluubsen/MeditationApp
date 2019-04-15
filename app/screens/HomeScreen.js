@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {StyleSheet, View} from "react-native";
 import {Body, Header, Icon, Left} from "native-base";
 import {createSwitchNavigator} from 'react-navigation';
-import DurationSlider from "../components/DurationSlider";
-import OpacityButton from "../components/OpacityButton";
+import DurationSlider from "../../components/DurationSlider";
+import OpacityButton from "../../components/OpacityButton";
 
 class HomeScreen extends Component {
     static navigationOptions = {

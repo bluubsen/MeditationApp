@@ -1,28 +1,16 @@
 import React, {Component} from 'react';
 import {Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {createAppContainer, createDrawerNavigator, createSwitchNavigator, DrawerItems} from 'react-navigation';
-import HomeScreen from "./screens/HomeScreen";
-import MeditationScreen from "./screens/MediationScreen";
-import LoginScreen from "./screens/LoginScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-import ProfilScreen from "./screens/ProfilScreen";
-import * as firebase from 'firebase';
+import HomeScreen from "./app/screens/HomeScreen";
+import MeditationScreen from "./app/screens/MediationScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import SettingsScreen from "./app/screens/SettingsScreen";
+import ProfilScreen from "./app/screens/ProfilScreen";
+import SignUpScreen from "./app/screens/SignUpScreen";
 
 const developmentMode = true;
 
 export default class App extends Component {
-
-    componentWillAmount() {
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6oQMuUnFLw8GSvsV1yecLNUdbSlqMfsw",
-            authDomain: "easy-meditation.firebaseapp.com",
-            databaseURL: "https://easy-meditation.firebaseio.com",
-            projectId: "easy-meditation",
-            storageBucket: "easy-meditation.appspot.com"
-        }
-        firebase.initializeApp(firebaseConfig);
-    }
-
     render() {
         return (
             <AppContainer/>
@@ -62,7 +50,8 @@ const DrawerNavigator = createDrawerNavigator({
 const AppSwitchNavigator = createSwitchNavigator({
     Login: {screen: LoginScreen},
     Home: {screen: DrawerNavigator},
-    Meditation: {screen: MeditationScreen}
+    Meditation: {screen: MeditationScreen},
+    SignUp: {screen: SignUpScreen}
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
@@ -75,25 +64,3 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-
-
-class WelcomeScreen extends Component {
-    render() {
-        return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>Welcome</Text>
-            </View>
-        );
-    }
-}
-
-
-class DashboardScreen extends Component {
-    render() {
-        return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>DashboardScreen</Text>
-            </View>
-        );
-    }
-}

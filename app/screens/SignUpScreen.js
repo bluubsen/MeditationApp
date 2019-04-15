@@ -2,27 +2,51 @@ import React, {Component} from "react";
 import {
     Dimensions,
     ImageBackground,
+    Keyboard,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
-    TouchableWithoutFeedback, Keyboard
+    TouchableWithoutFeedback,
+    View
 } from "react-native";
-import bgImage from "../backgrounds/Pictures/dawn-dusk-evening-861443.jpg";
-import {Icon} from "native-base";
+import {Icon} from 'native-base'
+import bgImage from "../../backgrounds/Pictures/dawn-dusk-evening-861443.jpg";
+import {auth} from '../config/Firebase';
+
+const {width: WIDTH} = Dimensions.get('window');
+
+class SignUpScreen extends Component {
 
 
-const {width: WIDTH} = Dimensions.get('window')
-
-class LoginScreen extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
+            email: '',
+            password: '',
+            checkPassword: '',
             showPass: true,
             press: false
         }
     }
+
+    signUp = (email, password) => {
+        try {
+            /* Password Validation, instance ... */
+            if (this.state.password.length < 6) {
+                alert('Please enter atleast 6 characters');
+                return
+            }
+            if (this.state.password !== this.state.checkPassword) {
+                alert('The password has to be equal');
+                return;
+            }
+            auth.createUserWithEmailAndPassword(email, password);
+            this.props.navigation.navigate('home');
+        } catch (e) {
+            console.log(e.toString());
+        }
+    };
 
     showPass = () => {
         if (this.state.press == false) {
@@ -30,7 +54,7 @@ class LoginScreen extends Component {
         } else {
             this.setState({showPass: true, press: false})
         }
-    }
+    };
 
     render() {
         return (
@@ -45,9 +69,10 @@ class LoginScreen extends Component {
                         />
                         <TextInput
                             style={styles.input}
-                            placeholder='Username'
+                            placeholder='Email'
                             placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                             underlineColorAndroid='transparent'
+                            onChangeText={email => this.setState({email})}
                         />
                     </View>
 
@@ -61,24 +86,42 @@ class LoginScreen extends Component {
                             autoCorrect={false}
                             placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                             underlineColorAndroid='transparent'
+                            onChangeText={password => this.setState({password})}
                         />
                         <TouchableOpacity style={styles.btnEye} onPress={this.showPass.bind(this)}>
                             <Icon name={this.state.press == false ? 'eye' : 'eye-off'} size={26}
                                   color={'rgba(255,255,255,0.7)'}/>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.btnLogin} onPress={() => this.props.navigation.navigate('Home')}>
-                        <Text style={styles.text}>Login</Text>
+
+                    <View style={styles.inputContainer}>
+                        <Icon name={'lock'} size={28} color={'rgba(255,255,255,0.7)'} style={styles.inputIcon}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Confirm password'
+                            secureTextEntry={this.state.showPass}
+                            autoCorrect={false}
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            underlineColorAndroid='transparent'
+                            onChangeText={checkPassword => this.setState({checkPassword})}
+                        />
+                        <TouchableOpacity style={styles.btnEye} onPress={this.showPass.bind(this)}>
+                            <Icon name={this.state.press == false ? 'eye' : 'eye-off'} size={26}
+                                  color={'rgba(255,255,255,0.7)'}/>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.btnLogin}
+                                      onPress={() => this.signUp(this.state.email, this.state.password)}>
+                        <Text style={styles.text}>SignUp</Text>
                     </TouchableOpacity>
                 </ImageBackground>
             </TouchableWithoutFeedback>
-        )
-            ;
+        );
     }
 }
 
-export default LoginScreen;
-
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     backgroundContainer: {
